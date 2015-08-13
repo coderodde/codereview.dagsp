@@ -20,7 +20,7 @@ public abstract class AbstractWeightedPathFinder<N extends AbstractGraphNode<N>>
      * 
      * @param source
      * @param target
-     * @return 
+     * @return a shortest path, or an empty list if target not reachable.
      */
     public abstract List<N> find(N source, N target);
     

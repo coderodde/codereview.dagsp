@@ -35,6 +35,9 @@ public class DirectedGraphNode extends AbstractGraphNode<DirectedGraphNode>  {
         this.out = new LinkedHashSet<>();
     }
     
+    /**
+     * {@inheritDoc } 
+     */
     @Override
     public boolean addChild(DirectedGraphNode child) {
         Objects.requireNonNull(child, "The child node is null.");
@@ -52,6 +55,9 @@ public class DirectedGraphNode extends AbstractGraphNode<DirectedGraphNode>  {
         return modified;
     }
 
+    /**
+     * {@inheritDoc } 
+     */
     @Override
     public boolean removeChild(DirectedGraphNode child) {
         Objects.requireNonNull(child, "The child node is null.");
@@ -69,6 +75,9 @@ public class DirectedGraphNode extends AbstractGraphNode<DirectedGraphNode>  {
         return modified;
     }
 
+    /**
+     * {@inheritDoc } 
+     */
     @Override
     public void clear() {
         checkOwnerGraphNotNull();
@@ -89,34 +98,52 @@ public class DirectedGraphNode extends AbstractGraphNode<DirectedGraphNode>  {
         out.clear();
     }
 
+    /**
+     * {@inheritDoc } 
+     */
     @Override
     public boolean hasChild(DirectedGraphNode childCandidate) {
         checkOwnerGraphNotNull();
         return out.contains(childCandidate);
     }
 
+    /**
+     * {@inheritDoc } 
+     */
     @Override
     public Set<DirectedGraphNode> children() {
         checkOwnerGraphNotNull();
         return Collections.<DirectedGraphNode>unmodifiableSet(out);
     }
 
+    /**
+     * {@inheritDoc } 
+     */
     @Override
     public Set<DirectedGraphNode> parents() {
         checkOwnerGraphNotNull();
         return Collections.<DirectedGraphNode>unmodifiableSet(in);
     }
    
+    /**
+     * {@inheritDoc } 
+     */
     @Override
     public String toString() {
         return "[DirectedGraphNode " + name + "]";
     }
 
+    /**
+     * {@inheritDoc } 
+     */
     @Override
     public int hashCode() {
         return name.hashCode();
     }
 
+    /**
+     * {@inheritDoc } 
+     */
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof DirectedGraphNode)) {
@@ -126,6 +153,9 @@ public class DirectedGraphNode extends AbstractGraphNode<DirectedGraphNode>  {
         return this.name.equals(((DirectedGraphNode) o).name);
     }
     
+    /**
+     * Checks that the owner graph of this node is set.
+     */
     private void checkOwnerGraphNotNull() {
         if (getOwnerGraph() == null) {
             throw new IllegalStateException(

@@ -63,6 +63,9 @@ extends AbstractWeightedPathFinder<N> {
                 return tracebackPath(target, parentMap);
             }
             
+            // 'current' is settled.
+            closed.add(current);
+            
             for (N child : current.children()) {
                 if (!closed.contains(child)) {
                     double w = distanceMap.get(current) + 
@@ -81,6 +84,7 @@ extends AbstractWeightedPathFinder<N> {
         return Collections.<N>emptyList();
     }
     
+    // An ad hoc structure for describing nodes and costs.
     private static final class NodeWrapper<N> 
     implements Comparable<NodeWrapper<N>> {
         
@@ -98,6 +102,13 @@ extends AbstractWeightedPathFinder<N> {
         }
     }
     
+    /**
+     * Checks the source and target nodes are in order.
+     * 
+     * @param <N> the actual graph node implementation type.
+     * @param source the source node.
+     * @param target the target node.
+     */
     private static <N extends AbstractGraphNode<N>> 
         void checkNodes(N source, N target) {
         Objects.requireNonNull(source, "The source node is null.");

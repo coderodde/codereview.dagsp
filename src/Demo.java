@@ -17,18 +17,37 @@ import net.coderodde.graph.support.DirectedGraphWeightFunction;
  */
 public class Demo {
     
-    private static final int LEVELS = 2000;
-    private static final int MAX_LEVEL_WIDTH = 10;
+    /**
+     * The amount of levels in the dag.
+     */
+    private static final int LAYERS = 5000;
+    
+    /**
+     * The maximum node amount in each level.
+     */
+    private static final int MAX_LAYER_WIDTH = 10;
+    
+    /**
+     * Maximum advance through layers.
+     */
     private static final int MAX_PROCEED = 15;
-    private static final float EDGE_PROBABILITY = 0.01f;
+    
+    /**
+     * The percentage of all possible edges.
+     */
+    private static final float EDGE_PROBABILITY = 0.001f;
     
     public static void main(String[] args) {
         long seed = System.currentTimeMillis();
         Random random = new Random(seed);
-        WeightedDag weightedDag = createRandomDag(LEVELS,
-                                                  MAX_LEVEL_WIDTH,
+        WeightedDag weightedDag = createRandomDag(LAYERS,
+                                                  MAX_LAYER_WIDTH,
                                                   EDGE_PROBABILITY,
                                                   random);
+        System.out.println("Amount of nodes: " + 
+                           weightedDag.graph.getNodeAmount());
+        System.out.println("Amount of edges: " + 
+                           weightedDag.graph.getEdgeAmount());
         System.out.println("Seed: " + seed);
         
         long startTime = System.currentTimeMillis();
@@ -91,8 +110,7 @@ public class Demo {
         
         boolean identical = pathsIdentical(path1, path2);
         
-        System.out.println("Paths are identical: " + 
-                           pathsIdentical(path1, path2));
+        System.out.println("Paths are identical: " + identical);
         
         if (identical) {
             for (DirectedGraphNode node : path1) {
@@ -101,13 +119,25 @@ public class Demo {
         }
     }
     
+    /**
+     * A simple struct for holding a dag and its weight function.
+     */
     private static class WeightedDag {
         Graph<DirectedGraphNode> graph;
         DirectedGraphWeightFunction weightFunction;
     }
     
-    private static WeightedDag createRandomDag(int levels,
-                                               int maxLevelWidth,
+    /**
+     * Creates a random dag.
+     * 
+     * @param layers          the amount of layers.
+     * @param maxLayerWidth   the maximum layer width.
+     * @param edgeProbability edge probability.
+     * @param random          the random number generator.
+     * @return a dag with its weight function.
+     */
+    private static WeightedDag createRandomDag(int layers,
+                                               int maxLayerWidth,
                                                float edgeProbability,
                                                Random random) {
         List<List<DirectedGraphNode>> levelList = new ArrayList<>();
@@ -118,9 +148,9 @@ public class Demo {
                 new DirectedGraphWeightFunction();
         
         // Create nodes.
-        for (int i = 0; i < levels; ++i) {
-            List<DirectedGraphNode> level = new ArrayList<>(maxLevelWidth);
-            int levelWidth = 1 + random.nextInt(maxLevelWidth);
+        for (int i = 0; i < layers; ++i) {
+            List<DirectedGraphNode> level = new ArrayList<>(maxLayerWidth);
+            int levelWidth = 1 + random.nextInt(maxLayerWidth);
             
             for (int j = 0; j < levelWidth; ++j) {
                 DirectedGraphNode node = 
@@ -177,10 +207,24 @@ public class Demo {
         return ret;
     }
         
+    /**
+     * Chooses a random element from a list.
+     * 
+     * @param <T>    the list element type.
+     * @param list   the list to choose from.
+     * @param random the random number generator.
+     * @return a random element.
+     */
     private static <T> T choose(List<T> list, Random random) {
         return list.get(random.nextInt(list.size()));
     }
     
+    /**
+     * Checks that the input paths are identical by their content.
+     * 
+     * @param paths the array of paths.
+     * @return {@code true} only if all input paths are identical.
+     */
     private static boolean pathsIdentical(List<DirectedGraphNode>... paths) {
         if (paths.length == 0) {
             return true;
@@ -205,6 +249,12 @@ public class Demo {
         return true;
     }
     
+    /**
+     * Returns {@code true} only if a path is valid. 
+     * 
+     * @param path the path to check.
+     * @return {@code true} if a path is valid.
+     */
     private static boolean isValidPath(List<DirectedGraphNode> path) {
         for (int i = 0; i < path.size() - 1; ++i) {
             if (!path.get(i).hasChild(path.get(i + 1))) {
@@ -215,6 +265,9 @@ public class Demo {
         return true;
     }
     
+    /**
+     * Prints a funky bar for separating stuff in console.
+     */
     private static void bar() {
         StringBuilder sb = new StringBuilder();
         

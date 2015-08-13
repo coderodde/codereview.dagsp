@@ -6,11 +6,11 @@ import net.coderodde.graph.AbstractGraphNode;
 import net.coderodde.graph.Graph;
 
 /**
- * This class implements depth-first search.
+ * This class implements depth-first search traversal.
  * 
  * @author Rodion "rodde" Efremov
  * @version 1.6
- * @param <N>
+ * @param <N> the actual graph node implementation type.
  */
 public class DepthFirstSearchTraversal<N extends AbstractGraphNode<N>> {
 
@@ -85,6 +85,7 @@ public class DepthFirstSearchTraversal<N extends AbstractGraphNode<N>> {
                                             isAcyclic);
     }
     
+    // Implementation.
     private void visit(N node) {
         startingTimeMap.put(node, ++time);
         colorMap.put(node, GRAY);

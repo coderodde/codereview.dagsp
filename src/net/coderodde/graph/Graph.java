@@ -22,7 +22,7 @@ public class Graph<N extends AbstractGraphNode<N>> implements Iterable<N> {
     /**
      * Caches the amount of edges in this graph.
      */
-    int edgeAmount;
+    protected int edgeAmount;
     
     /**
      * Maps the names of nodes to nodes.
@@ -107,18 +107,45 @@ public class Graph<N extends AbstractGraphNode<N>> implements Iterable<N> {
         return map.get(nodeName);
     }
     
+    /**
+     * Gets the amount of nodes in this graph.
+     * 
+     * @return the amount of nodes. 
+     */
     public int getNodeAmount() {
         return map.size();
     }
     
+    /**
+     * Gets the amount of edges in this graph.
+     * 
+     * @return the amount of edges.
+     */
+    public int getEdgeAmount() {
+        return edgeAmount;
+    }
+    
+    /**
+     * Gets the modification count of this graph.
+     * 
+     * @return the modification count.
+     */
     public int getModificationCount() {
         return modificationCount;
     }
     
+    /**
+     * Increments the modification count of this graph. 
+     */
     public void incModificationCount() {
         ++modificationCount;
     }
 
+    /**
+     * Returns an iterator over this graph's nodes.
+     * 
+     * @return a node iterator.
+     */
     @Override
     public Iterator<N> iterator() {
         return new NodeIterator();

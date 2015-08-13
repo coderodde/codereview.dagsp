@@ -43,7 +43,7 @@ public abstract class AbstractGraphNode<N extends AbstractGraphNode<N>> {
     public abstract boolean addChild(DirectedGraphNode child);
 
     /**
-     * Attempts to remove child from the child list of this node.
+     * Attempts to remove a child from the child list of this node.
      * 
      * @param child the child node to remove.
      * @return {@code true} only if the structure of the graph changed.
@@ -78,12 +78,14 @@ public abstract class AbstractGraphNode<N extends AbstractGraphNode<N>> {
      */
     public abstract Set<N> parents();
     
+    // Force the user to implement 'hashCode'.
     /**
      * {@inheritDoc }
      */
     @Override
     public abstract int hashCode();
     
+    // Force the user to implement 'equals'.
     /**
      * @return 
      */

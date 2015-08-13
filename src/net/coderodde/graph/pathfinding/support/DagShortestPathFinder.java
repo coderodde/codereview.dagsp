@@ -42,6 +42,9 @@ extends AbstractWeightedPathFinder<DirectedGraphNode> {
      */
     private final Map<DirectedGraphNode, Integer> nodeIndexMap;
     
+    /**
+     * Caches the modification count of the graph.
+     */
     private int graphModificationCount;
     
     /**
@@ -63,6 +66,9 @@ extends AbstractWeightedPathFinder<DirectedGraphNode> {
         processGraph();
     }
 
+    /**
+     * {@inheritDoc } 
+     */
     @Override
     public List<DirectedGraphNode> find(DirectedGraphNode source, 
                                         DirectedGraphNode target) {
@@ -78,7 +84,8 @@ extends AbstractWeightedPathFinder<DirectedGraphNode> {
                                 graph, 
                                 "The target node does not belong to the " +
                                 "current graph.");
-        
+        // Check that the graph did not change since the last time it was
+        // preprocessed.
         checkGraph();
         
         int sourceIndex = nodeIndexMap.get(source);

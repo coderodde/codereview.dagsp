@@ -16,8 +16,14 @@ import net.coderodde.graph.AbstractWeightFunction;
 public class DirectedGraphWeightFunction 
 extends AbstractWeightFunction<DirectedGraphNode> {
 
+    /**
+     * The weight matrix.
+     */
     private final Map<DirectedGraphNode, Map<DirectedGraphNode, Double>> map;
     
+    /**
+     * Constructs an empty weight function.
+     */
     public DirectedGraphWeightFunction() {
         this.map = new HashMap<>();
     }
